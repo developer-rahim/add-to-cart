@@ -12,7 +12,7 @@ import 'Database/db_helper.dart';
 import 'SCREEN/homepage.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();////////
   runApp(MyApp());
 }
 
