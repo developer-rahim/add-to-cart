@@ -83,9 +83,9 @@ class AddEditEmployeeState extends State<AddEditEmployee> {
 
   @override
   void initState() {
-   // loadCounter();
+    // loadCounter();
     CartCounter cartCounter = Provider.of<CartCounter>(context, listen: false);
-
+    cartCounter.loadCounter();
     // getEmployees();
     // TODO: implement initState
     super.initState();
@@ -110,7 +110,7 @@ class AddEditEmployeeState extends State<AddEditEmployee> {
                     badgeContent: Consumer<CartCounter>(
                         builder: ((context, value, child) {
                       return Text(
-                      cartCounter.counter.toString(),
+                        cartCounter.counter.toString(),
                         // value.getCounter().toString(),
                         style: TextStyle(color: Colors.white),
                       );
@@ -166,6 +166,7 @@ class AddEditEmployeeState extends State<AddEditEmployee> {
                                       priceindex.toString(),
                                       style: TextStyle(fontSize: 13),
                                     ),
+                                   
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -176,40 +177,42 @@ class AddEditEmployeeState extends State<AddEditEmployee> {
                                   ],
                                 ),
                               ),
-                              trailing: RaisedButton(
-                                  color: Colors.grey,
-                                  child: Text("Add Cart",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 14)),
-                                  onPressed: () {
-                                    // cartCounter.addCounter();
-                                // CartCounter._incrementCounter();
-                                    Employee addEmployee = new Employee(
-                                        productName: productName[index],
-                                        productPrice:
-                                            productPRICE[index].toString(),
-                                        productQuntity: productUnit[index],
-                                        productTag: unitindex);
-                                    DatabaseHelper.instance
-                                        .insert(addEmployee.toMapWithoutId())
-                                        .then((value) => {
-                                              cartCounter.addTotalPrice(
-                                                  double.parse(
-                                                      productPRICE[index]
-                                                          .toString())),
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: const Text(
-                                                    'Added Successfully'),
-                                                duration:
-                                                    const Duration(seconds: 1),
-                                              ))
-                                            })
-                                        .onError((error, stackTrace) => {
-                                              // ignore: avoid_print
-                                              //  return e.toString();
-                                            });
-                                  })),
+                              trailing: Wrap(children: [
+                                RaisedButton(
+                                    color: Colors.grey,
+                                    child: Text("Add Cart",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14)),
+                                    onPressed: () {
+                                      // cartCounter.addCounter();
+                                      cartCounter.incrementCounter();
+                                      Employee addEmployee = new Employee(
+                                          productName: productName[index],
+                                          productPrice:
+                                              productPRICE[index].toString(),
+                                          productQuntity: productUnit[index],
+                                          productTag: unitindex);
+                                      DatabaseHelper.instance
+                                          .insert(addEmployee.toMapWithoutId())
+                                          .then((value) => {
+                                                // cartCounter.addTotalPrice(
+                                                //     double.parse(
+                                                //         productPRICE[index]
+                                                //             .toString())),
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: const Text(
+                                                      'Added Successfully'),
+                                                  duration: const Duration(
+                                                      seconds: 1),
+                                                ))
+                                              })
+                                          .onError((error, stackTrace) => {
+                                                // ignore: avoid_print
+                                                //  return e.toString();
+                                              });
+                                    }),
+                              ])),
                         );
                       }),
                 ),

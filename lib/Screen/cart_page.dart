@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Database/db_helper.dart';
+import 'package:flutter_application_1/Provider/cart_counter.dart';
+import 'package:provider/provider.dart';
 
 import '../Model/data_base_model.dart';
 import '../SCREEN/homepage.dart';
@@ -26,6 +28,8 @@ class EmployeesListState extends State<EmployeesList> {
 
   @override
   void initState() {
+    CartCounter cartCounter =Provider.of<CartCounter>(context , listen: false);
+    cartCounter.loadCounter();
     // TODO: implement initState
     getEmployees();
     super.initState();
@@ -33,6 +37,8 @@ class EmployeesListState extends State<EmployeesList> {
 
   @override
   Widget build(BuildContext context) {
+  CartCounter cartCounter =Provider.of<CartCounter>(context , );
+
     // TODO: implement build
 
     return SafeArea(
@@ -90,6 +96,7 @@ class EmployeesListState extends State<EmployeesList> {
                             child: IconButton(
                                 icon: Icon(Icons.delete),
                                 onPressed: () {
+                                       cartCounter.decrementCounter();
                                   DatabaseHelper.instance
                                       .delete(getEmployee.productId!);
                                   setState(() => {
