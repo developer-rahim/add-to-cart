@@ -186,7 +186,9 @@ class AddEditEmployeeState extends State<AddEditEmployee> {
                                     onPressed: () {
                                       // cartCounter.addCounter();
                                       cartCounter.incrementCounter();
+                                  //  cartCounter.productTotalPrice(productPRICE[index]);
                                       Employee addEmployee = new Employee(
+                                       productId: index,
                                           productName: productName[index],
                                           productPrice:
                                               productPRICE[index].toString(),
@@ -195,10 +197,10 @@ class AddEditEmployeeState extends State<AddEditEmployee> {
                                       DatabaseHelper.instance
                                           .insert(addEmployee.toMapWithoutId())
                                           .then((value) => {
-                                                // cartCounter.addTotalPrice(
-                                                //     double.parse(
-                                                //         productPRICE[index]
-                                                //             .toString())),
+                                                cartCounter.addTotalPrice(
+                                                    double.parse(
+                                                        productPRICE[index]
+                                                            .toString())),
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(SnackBar(
                                                   content: const Text(
